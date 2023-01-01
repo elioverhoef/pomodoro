@@ -11,7 +11,7 @@ text_area = False
 
 def start():
     global timer, paused, passed
-    winsound.PlaySound('40hz.wav', winsound.SND_ASYNC)
+    winsound.PlaySound('40hz.wav', winsound.SND_LOOP + winsound.SND_ASYNC)
     if paused:
         timer = time.perf_counter() - passed
         paused = False
