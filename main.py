@@ -1,6 +1,7 @@
-from tkinter import *
+import tkinter
 import time
 import winsound
+from customtkinter import *
 
 timer = time.perf_counter()
 passed = 0
@@ -41,10 +42,10 @@ def draw():
     minutes = "{:02d}".format(total_seconds // 60)
     seconds = "{:02d}".format(total_seconds - (total_seconds // 60) * 60)
 
-    start_button = Button(text="Start", height=3, width=10, command=start)
-    pause_button = Button(text="Pause", height=3, width=10, command=pause)
-    stop_button = Button(text="Stop", height=3, width=10, command=stop)
-    text_area = Label(text=f"{minutes}:{seconds}", height=6, width=20, font=("Arial", 25))
+    start_button = CTkButton(master=root, text="Start", command=start, width=110, height=60)
+    pause_button = CTkButton(master=root, text="Pause", command=pause, width=110, height=60)
+    stop_button = CTkButton(master=root, text="Stop", command=stop, width=110, height=60)
+    text_area = CTkLabel(master=root, text=f"{minutes}:{seconds}", font=("Arial", 25), height=130)
 
     # place widgets into window container using a layout
     start_button.grid(row=0, column=0)
@@ -69,9 +70,11 @@ def refresh():
         root.after(1000, refresh)
 
 
-root = Tk()
+set_appearance_mode("System")
+root = CTk()
 root.title("Pomodoro")
-root.geometry("400x300")
+root.geometry("330x200")
+root.configure()
 root.iconbitmap("pomodoro.ico")
 draw()
 root.mainloop()
