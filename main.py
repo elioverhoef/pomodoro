@@ -1,10 +1,11 @@
-import tkinter
 import time
-import json
+from ctypes import windll
+
 import winsound
-from datetime import date
-from helper import *
+from BlurWindow.blurWindow import blur
 from customtkinter import *
+
+from helper import *
 
 timer = time.perf_counter()
 passed = 0
@@ -56,10 +57,10 @@ def draw():
     start_button = CTkButton(master=root, text="Start", command=start, width=110, height=60)
     pause_button = CTkButton(master=root, text="Pause", command=pause, width=110, height=60)
     stop_button = CTkButton(master=root, text="Stop", command=stop, width=110, height=60)
-    text_area = CTkLabel(master=root, text=f"{minutes}:{seconds}", font=("Arial", 25), height=130)
+    text_area = CTkLabel(master=root, text=f"{minutes}:{seconds}", font=("Arial", 25), height=130, bg_color="darkgreen")
 
     pomo_count = CTkLabel(master=root, text=f"Pomos: {counter[str(date.today())]}",
-                          font=("Arial", 18), text_color="darkgrey", height=10)
+                          font=("Arial", 18), text_color="darkgrey", height=10, bg_color="darkgreen")
 
     # place widgets into window container using a layout
     start_button.grid(row=0, column=0)
@@ -92,8 +93,17 @@ def refresh():
 set_appearance_mode("System")
 root = CTk()
 root.title("Pomodoro")
-root.geometry("330x200")
-root.configure()
 root.iconbitmap("pomodoro.ico")
+root.resizable(False, False)
+root.geometry("330x200")
+
+# Add blur
+root.config(bg='darkgreen')
+root.wm_attributes("-transparent", 'darkgreen')
+root.update()
+hWnd = windll.user32.GetForegroundWindow()
+blur(hWnd)
+
+# Draw buttons and labels
 draw()
 root.mainloop()
