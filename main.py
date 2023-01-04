@@ -54,9 +54,9 @@ def draw():
     minutes = "{:02d}".format(total_seconds // 60)
     seconds = "{:02d}".format(total_seconds - (total_seconds // 60) * 60)
 
-    start_button = CTkButton(master=root, text="Start", command=start, width=110, height=60)
-    pause_button = CTkButton(master=root, text="Pause", command=pause, width=110, height=60)
-    stop_button = CTkButton(master=root, text="Stop", command=stop, width=110, height=60)
+    start_button = CTkButton(master=root, text="Start", command=start, width=110, height=60, font=("Lato", 16))
+    pause_button = CTkButton(master=root, text="Pause", command=pause, width=110, height=60, font=("Lato", 16))
+    stop_button = CTkButton(master=root, text="Stop", command=stop, width=110, height=60, font=("Lato", 16))
     text_area = CTkLabel(master=root, text=f"{minutes}:{seconds}", font=("Arial", 25), height=130, bg_color="darkgreen")
 
     pomo_count = CTkLabel(master=root, text=f"Pomos: {counter[str(date.today())]}",
