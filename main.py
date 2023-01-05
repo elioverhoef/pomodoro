@@ -82,7 +82,7 @@ def refresh():
         seconds = "{:02d}".format(total_seconds - (total_seconds // 60) * 60)
         text_area.configure(text=f"{minutes}:{seconds}")
         pomo_count.configure(text=f"Pomos: {counter[str(date.today())]}")
-        if minutes == seconds == "00":
+        if minutes == seconds == "00" or int(minutes) < 0:
             winsound.PlaySound(None, winsound.SND_PURGE)
             winsound.PlaySound('done.wav', winsound.SND_ASYNC)
             increment_counter(counter)
