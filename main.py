@@ -1,10 +1,8 @@
 import time
-from ctypes import windll
-
 import winsound
+from ctypes import windll
 from BlurWindow.blurWindow import blur
 from customtkinter import CTk, CTkLabel, CTkButton, set_appearance_mode
-
 from helper import increment_counter, date, get_counter, init_counter
 
 timer = None
@@ -41,7 +39,6 @@ def stop():
     timer = time.perf_counter()
     increment_counter(counter)
     refresh()
-    paused = True
 
 
 def draw():
@@ -55,7 +52,6 @@ def draw():
     root.resizable(False, False)
     root.geometry("330x200")
 
-    # Add blur
     root.config(bg='darkgreen')
     root.wm_attributes("-transparent", 'darkgreen')
     root.update()
