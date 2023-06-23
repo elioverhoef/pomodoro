@@ -8,6 +8,8 @@ def get_counter():
     try:
         with open(counter_json_str, 'r') as counter_json:
             return json.load(counter_json)
+    except FileNotFoundError:
+        return {}
     except json.decoder.JSONDecodeError:
         return {}
 
