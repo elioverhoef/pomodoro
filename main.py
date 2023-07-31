@@ -1,17 +1,22 @@
 import time
-import winsound
 from ctypes import windll
+
+import winsound
 from BlurWindow.blurWindow import blur
 from customtkinter import CTk, CTkLabel, CTkButton, set_appearance_mode
+
 from helper import increment_counter, date, get_counter, init_counter
 
 timer = None
 passed = 0
 paused = False
 duration = 50 * 60
+# noinspection PyTypeChecker
 text_area: CTkLabel = None
+# noinspection PyTypeChecker
 pomo_count: CTkLabel = None
 playing = False
+# noinspection PyTypeChecker
 root: CTk = None
 
 
@@ -86,6 +91,7 @@ def stop_playing():
     winsound.PlaySound(None, winsound.SND_PURGE)
 
 
+# noinspection PyTypeChecker
 def refresh():
     global text_area, pomo_count, paused, passed, duration, root
     counter = get_counter()
