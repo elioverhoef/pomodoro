@@ -10,7 +10,7 @@ from helper import increment_counter, date, get_counter, init_counter
 timer = None
 passed = 0
 paused = False
-duration = 50 * 60
+duration = 90 * 60
 # noinspection PyTypeChecker
 text_area: CTkLabel = None
 # noinspection PyTypeChecker
