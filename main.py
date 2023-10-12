@@ -38,9 +38,9 @@ def pause():
 
 
 def stop():
-    global paused, timer
+    global timer
     counter = get_counter()
-    stop_playing()
+    pause()
     timer = time.perf_counter()
     increment_counter(counter)
     refresh()
