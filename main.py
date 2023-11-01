@@ -31,18 +31,21 @@ def start():
     refresh()
 
 
-def pause():
+def stop_playing():
     global paused, playing
-    stop_playing()
     paused = True
+    playing = False
+    winsound.PlaySound(None, winsound.SND_PURGE)
 
 
 def stop():
-    global timer
+    global timer, paused
+    if paused:
+        return
     counter = get_counter()
-    pause()
-    timer = time.perf_counter()
     increment_counter(counter)
+    timer = time.perf_counter()
+    stop_playing()
     refresh()
 
 
@@ -64,7 +67,7 @@ def draw():
     blur(window)
 
     start_button = CTkButton(master=root, text="Start", command=start, width=110, height=60, font=("Lato", 16))
-    pause_button = CTkButton(master=root, text="Pause", command=pause, width=110, height=60, font=("Lato", 16))
+    pause_button = CTkButton(master=root, text="Pause", command=stop_playing, width=110, height=60, font=("Lato", 16))
     stop_button = CTkButton(master=root, text="Stop", command=stop, width=110, height=60, font=("Lato", 16))
     text_area = CTkLabel(master=root, text="00:00", font=("Arial", 25), height=130, bg_color="darkgreen")
     pomo_count = CTkLabel(master=root, text=f"Count: {counter[str(date.today())]}", font=("Arial", 18),
@@ -85,31 +88,26 @@ def start_playing():
     winsound.PlaySound('40hz.wav', winsound.SND_LOOP + winsound.SND_ASYNC)
 
 
-def stop_playing():
-    global playing
-    playing = False
-    winsound.PlaySound(None, winsound.SND_PURGE)
-
-
 # noinspection PyTypeChecker
 def refresh():
     global text_area, pomo_count, paused, passed, duration, root
     counter = get_counter()
+    total_seconds = round(duration - time.perf_counter() + timer)
+    minutes = "{:02d}".format(int(total_seconds / 60))
+    seconds = "{:02d}".format(total_seconds - int(total_seconds / 60) * 60)
+    text_area.configure(text=f"{minutes}:{seconds}")
+    pomo_count.configure(text=f"Count: {counter[str(date.today())]}")
 
     if paused:
         passed = time.perf_counter() - timer
     else:
-        total_seconds = round(duration - time.perf_counter() + timer)
-        minutes = "{:02d}".format(total_seconds // 60)
-        seconds = "{:02d}".format(total_seconds - (total_seconds // 60) * 60)
-        text_area.configure(text=f"{minutes}:{seconds}")
         pomo_count.configure(text=f"Count: {counter[str(date.today())]}")
         if minutes == seconds == "00" or total_seconds < 0:
             stop_playing()
             winsound.PlaySound('done.wav', winsound.SND_ASYNC)
             increment_counter(counter)
             return
-        root.after(1000, refresh)
+        root.after(100, refresh)
 
 
 set_appearance_mode("System")
